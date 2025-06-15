@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenBot - Renewable Energy Chatbot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0fdf4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 400px;
+      height: 600px;
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background-color: #10b981;
+      color: white;
+      padding: 16px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      flex-grow: 1;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-input input {
+      flex-grow: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .chat-input button {
+      background-color: #10b981;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="chat-container">
+    <div class="chat-header">GreenBot 🌿</div>
+    <div class="chat-messages" id="messages"></div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Ask about solar, wind, hydro...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const messagesDiv = document.getElementById("messages");
+
+    function addMessage(message, sender) {
+      const div = document.createElement("div");
+      div.style.marginBottom = "12px";
+      div.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      messagesDiv.appendChild(div);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, "You");
+      input.value = "";
+
+      setTimeout(() => {
+        const response = getBotResponse(text);
+        addMessage(response, "GreenBot");
+      }, 500);
+    }
+
+    function getBotResponse(input) {
+      const lower = input.toLowerCase();
+      if (lower.includes("solar")) return "Solar energy uses sunlight to produce electricity. Great for sunny areas!";
+      if (lower.includes("wind")) return "Wind energy is generated using wind turbines that convert air movement into power.";
+      if (lower.includes("hydro")) return "Hydropower uses flowing water to produce electricity. It's one of the oldest renewable sources.";
+      if (lower.includes("save energy")) return "Try switching to LED bulbs, unplugging unused devices, and using energy-efficient appliances.";
+      if (lower.includes("renewable")) return "Renewable energy comes from natural sources that replenish themselves – like sun, wind, and water.";
+      return "I'm here to help you learn about renewable energy! Ask me about solar, wind, hydro, or how to save energy at home.";
+    }
+  </script>
+</body>
+
+</html>
